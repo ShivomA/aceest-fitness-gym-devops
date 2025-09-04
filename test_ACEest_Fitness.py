@@ -10,7 +10,8 @@ def app_instance():
     yield app
     root.destroy()
 
-def test_add_valid_workout(app_instance):
+@patch("tkinter.messagebox.showinfo")
+def test_add_valid_workout(_mock_info, app_instance):
     app = app_instance
     app.workout_entry.insert(0, "Pushups")
     app.duration_entry.insert(0, "15")
@@ -19,21 +20,24 @@ def test_add_valid_workout(app_instance):
     assert app.workouts[0]["workout"] == "Pushups"
     assert app.workouts[0]["duration"] == 15
 
-def test_add_invalid_duration(app_instance):
+@patch("tkinter.messagebox.showerror")
+def test_add_invalid_duration(_mock_error, app_instance):
     app = app_instance
     app.workout_entry.insert(0, "Running")
     app.duration_entry.insert(0, "abc")
     app.add_workout()
     assert len(app.workouts) == 0
 
-def test_add_empty_fields(app_instance):
+@patch("tkinter.messagebox.showerror")
+def test_add_empty_fields(_mock_error, app_instance):
     app = app_instance
     app.workout_entry.insert(0, "")
     app.duration_entry.insert(0, "")
     app.add_workout()
     assert len(app.workouts) == 0
 
-def test_multiple_workouts(app_instance):
+@patch("tkinter.messagebox.showinfo")
+def test_multiple_workouts(_mock_info, app_instance):
     app = app_instance
     # First workout
     app.workout_entry.insert(0, "Squats")
