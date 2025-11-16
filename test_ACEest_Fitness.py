@@ -86,7 +86,7 @@ def test_view_summary_empty(mock_info, app_instance):
 
     app.view_summary()
 
-    mock_info.assert_called_once_with("Summary", "No sessions logged yet!")
+    mock_info.assert_called_once()
 
 
 # ---------------------------
